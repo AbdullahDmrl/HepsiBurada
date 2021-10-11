@@ -83,14 +83,6 @@
 
     </dependencies>
 
-
-
-
-
-
-
-
-
     <!--   // M5yaptim  Aşağıdaki plugin Jenkins in bu projeyi çalıştıracağı zaman hangi dosyayı çalıştıracağını (testng.xml) belirtiyoruz-->
 
     <build>
@@ -100,14 +92,17 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M5</version>
                 <configuration>
-                    <suiteXmlFiles>
-                        <suiteXmlFile>testng.xml</suiteXmlFile>
-                    </suiteXmlFiles>
+
+                    <includes>
+                        <!-- for  run class or classes  **/:bulunduğu lokasyonu bütün klasörlere göre bulabiliyor   -->
+                        <include>**/TestRunnerExtentReport.java</include>
+                    </includes>
+                    <testFailureIgnore>true</testFailureIgnore>
                 </configuration>
             </plugin>
         </plugins>
-
     </build>
+
 
 
 </project>
