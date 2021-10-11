@@ -9,23 +9,12 @@ import org.testng.annotations.AfterClass;
         features = {"src/test/java/FeatureFiles"},
         glue = {"StepDefinations"},
 
-        plugin = {
-                "com.cucumber.listener.ExtentCucumberFormatter:target/ExtentReport/ExtentReportRegression.html"
-                // oluşturalacak raporun yeri ve adı veriliyor.
+        plugin = { //basit rapor oluşturan plugin
+                "html:target/cucumber-report",
+                "json:target/cucumber.json",
         }
 )
 public class TestRunnerExtentReport extends AbstractTestNGCucumberTests {
 
-       @AfterClass
-       public static void afterClass() {
-           Reporter.loadXMLConfig("src/test/java/XML_Files/ExtentReportSet.xml");
 
-           Reporter.setSystemInfo("User Name", "A Demirel");
-           Reporter.setSystemInfo("Application Name", "Basqar");
-           Reporter.setSystemInfo("Operating System Info", System.getProperty("os.name").toString());
-           Reporter.setSystemInfo("Department", "QAr");
-           Reporter.setSystemInfo("Ek Satır", "Acıklamasi");
-
-           Reporter.setTestRunnerOutput("Test Execution Cucumber Report");
-       }
 }
