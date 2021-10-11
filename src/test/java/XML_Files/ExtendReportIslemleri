@@ -1,0 +1,96 @@
+0- https://www.qaautomation.co.in/2018/10/cucumber-extent-report.html
+   sitesinden mrnek bir implemantasyon bulundu
+
+1-  POM.xml e aşağıdaki 2 depency i ekliyoruz.
+
+        <!--        To generate extends report we need these 2 dependencies -->
+        <!-- https://mvnrepository.com/artifact/com.aventstack/extentreports -->
+        <dependency>
+            <groupId>com.aventstack</groupId>
+            <artifactId>extentreports</artifactId>
+            <version>3.0.6</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.vimalselvam/cucumber-extentsreport -->
+        <dependency>
+            <groupId>com.vimalselvam</groupId>
+            <artifactId>cucumber-extentsreport</artifactId>
+            <version>3.0.2</version>
+        </dependency>
+
+2-  ExtendReport a ait başlangıç ayar dosyası Projeye eklenir.
+       XMLFiles şeklinde Java nın altına klasör açarak extentReportSet.xml ismi ile ekleyelim aşağıdaki dosyayı.
+       Bu dosya hazırlanacak raporun dosyanın encoding , genel şablon, tarih tipi,ve genel başlık gibi
+       ayarlarının yer aldığı ayar dosyasıdır.
+
+   <?xml version="1.0" encoding="UTF-8"?>
+   <extentreports>
+       <configuration>
+
+
+           <!-- report theme --> <!-- standard, dark -->
+           <theme>standard</theme>
+
+           <!-- document encoding -->  <!-- defaults to UTF-8 -->
+           <encoding>defaults</encoding>
+
+           <!-- protocol for script and stylesheets -->   <!-- defaults to https -->
+           <protocol>https</protocol>
+
+           <!-- title of the document -->
+           <documentTitle>Basqar extend report</documentTitle>
+
+           <!-- report name - displayed at top-nav -->
+           <reportName>Basqar report</reportName>
+
+           <!-- global date format override -->  <!-- defaults to yyyy-MM-dd -->
+           <dateFormat>yyyy-MM-dd</dateFormat>
+
+           <!-- global time format override -->   <!-- defaults to HH:mm:ss -->
+           <timeFormat>HH:mm:ss</timeFormat>
+
+   <!--        &lt;!&ndash; custom javascript &ndash;&gt;-->
+   <!--        <scripts>-->
+   <!--            <![CDATA[-->
+   <!--        $(document).ready(function() {-->
+
+   <!--        });-->
+   <!--      ]]>-->
+   <!--        </scripts>-->
+
+   <!--        &lt;!&ndash; custom styles &ndash;&gt;-->
+   <!--        <styles>-->
+   <!--            <![CDATA[-->
+
+   <!--      ]]>-->
+   <!--        </styles>-->
+       </configuration>
+   </extentreports>
+
+3- Runner Clasımızı plag in ve diğer ayarlarıyla hazırlıyoruz.
+    _05_TestRunnerExtendReport  şeklinde
+
+    plugin = {
+                    "com.cucumber.listener.ExtentCucumberFormatter:target/ExtentReport/ExtentReportRegression.html"
+                    // oluşturalacak raporun yeri ve adı veriliyor.
+            }
+
+4-Runner Clasımıza AfterClass metodu örnekteki gibi eklendi.
+
+       @AfterClass
+       public static void afterClass()
+       {
+           Reporter.loadXMLConfig("src/test/java/XMLFiles/ExtendReportSet.xml");
+
+           Reporter.setSystemInfo("User Name","İsmet Temur");
+           Reporter.setSystemInfo("Application Name","Basqar");
+           Reporter.setSystemInfo("Operating System Info",System.getProperty("os.name").toString());
+           Reporter.setSystemInfo("Department","QAr");
+           Reporter.setSystemInfo("Ek Satır","Açıklamas");
+
+           Reporter.setTestRunnerOutput("Test Execution Cucumber Report");
+       }
+
+
+
+
